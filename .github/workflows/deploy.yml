@@ -18,18 +18,49 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  build-and-deploy:
+    name: Build, and Deploy Backend
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    environment: ${{ inputs.enviroment }} # 選択したEnviromentに基づいてシークレットを使用
+    defaults:
+      run:
+        working-directory: ./backend
 
-      # AWS認証
+    steps:
+      #1. リポジトリのチェックアウト
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      #2. Python環境セットアップ
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      #3. AWS SAM CLIインストール
+      - name: Install AWS SAM CLI
+        run: pip install aws-sam-cli
+      
+      #4. AWS認証
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
           aws-region: ap-northeast-1
 
-      # AWS上へアップロード
+      - name: Check AWS CLI configuration (verify Identity)
+        run: aws sts get-caller-identity
+
+      #5. パラメータ設定
+      # 後ほど対応する
+
+      #6. ビルド
+      - name: Run SAM build
+        shell: pwsh
+        run: ./build.ps1
+
+      #7. AWS上へアップロード
       - name: Deploy
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
