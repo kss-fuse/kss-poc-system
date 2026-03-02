@@ -1,3 +1,18 @@
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Input the branch to deploy"
+        required: true
+        default: "main"
+        type: string
+      enviroment:
+        description: "Select the enviroment to deploy"
+        required: true
+        type: choice
+        options:
+          - dev
+
 permissions:
   id-token: write
   contents: read
