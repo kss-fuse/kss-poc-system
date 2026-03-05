@@ -80,13 +80,19 @@ jobs:
           "YOUR_NAME=$yourName" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       #6. ビルド
-      - name: Run SAM build
-        shell: pwsh
-        run: ./build.ps1
+      - name: SAM build
+        run: sam build
 
       #7. AWS上へアップロード
-      - name: Deploy SAM template
-        shell: pwsh
+      - name: SAM Deploy
         run: |
-          sam deploy --stack-name "${{ secrets.AWS_LAMBDA_STACK_NAME }}" --s3-bucket "${{ secrets.AWS_S3_LAMBDA_BUCKET_NAME }}" --region ap-northeast-1 --no-confirm-changeset --no-fail-on-empty-changeset --capabilities CAPABILITY_IAM --config-env $env:CONFIG_ENV --parameter-overrides StageName=$env:STAGE_NAME YourName=$env:YOUR_NAME BucketName="${{ secrets.AWS_S3_DATA_BUCKET_NAME }}"
+          sam deploy \
+            --stack-name ${{ secrets.AWS_LAMBDA_STACK_NAME }} \
+            --s3-bucket ${{ secrets.AWS_S3_LAMBDA_BUCKET_NAME }} \
+            --region ap-northeast-1 \
+            --no-confirm-changeset \
+            --no-fail-on-empty-changeset \
+            --capabilities CAPABILITY_IAM \
+            --config-env $env:CONFIG_ENV \
+            --parameter-overrides StageName=$env:STAGE_NAME YourName=$env:YOUR_NAME BucketName="${{ secrets.AWS_S3_DATA_BUCKET_NAME }}"
  
