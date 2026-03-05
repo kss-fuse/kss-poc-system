@@ -1,3 +1,5 @@
+name: Backend Deployment
+
 on:
   # 手動トリガーを有効化
   workflow_dispatch:
