@@ -5,7 +5,7 @@ template_file = "template_dev.yaml"
 
 [dev.deploy.parameters]
 template_file = "template_dev.yaml"
-stack_name = "kss-poc-dev-backend"
+stack_name = "kss-serverless-sample-dev-backend"
 resolve_s3 = true
 capabilities = "CAPABILITY_IAM"
 [default.deploy.parameters]
@@ -15,7 +15,7 @@ s3_prefix = "kss-serverless-sample"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 disable_rollback = true
-parameter_overrides = "BucketName=\"kss-poc-s3-lambda-01\""
+parameter_overrides = "BucketName=\"kss-serverless-sample-s3-lambda-01\""
 image_repositories = []
 
 [default.global.parameters]
