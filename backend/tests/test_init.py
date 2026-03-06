@@ -1,4 +1,8 @@
-from ..src.functions.init.app import lambda_handler
+import os
+import sys
+sys.path.append(os.getcwd())
+
+from backend.src.functions.init.app import lambda_handler
 
 def test_lambda_handler():
     event = {}
