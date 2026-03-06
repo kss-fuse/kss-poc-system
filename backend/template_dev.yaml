@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Kss Poc System
+Description: Kss Serverless Sample Dev
 
 Parameters:
   BucketName:
@@ -34,18 +34,20 @@ Resources:
       ContentUri: src/layers/common/
       CompatibleRuntimes:
         - python3.13
+    CompatibleArchitectures:
+      - x86_64
 
-  KssPocSystemApi:
+  KssServerlessSampleApi:
     Type: AWS::Serverless::Api
     Properties:
       StageName: dev
-      name: KssPocSystemApi
+      Name: kss-serverless-sample-api
 
-  InitFunction:
+  KssServerlessSampleInitFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: KssPocSystemInitFunction
-      description: "布施：CI/CD・サーバーレスアプリケーション試験作成（初期表示）"
+      FunctionName: KssServerlessSampleInitFunction
+      Description: "布施：CI/CD・サーバーレスアプリケーション試作（初期表示）"
       CodeUri: src/functions/init/
       Handler: app.lambda_handler
       Layers:
@@ -54,6 +56,6 @@ Resources:
         Api:
           Type: Api
           Properties:
-            RestApiId: !Ref KssPocSystemApi
+            RestApiId: !Ref KssServerlessSampleApi
             Path: /init
             Method: get

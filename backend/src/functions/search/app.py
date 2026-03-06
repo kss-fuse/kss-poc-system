@@ -7,7 +7,7 @@ def lambda_handler(event, context):
             "Content-Type": "application/json"
         },
         "body": json.dumps({
-            "message": "KSS POC SYSTEM is running!",
+            "message": "Kss Serverless Sample is running!",
             "input": event
         })
     }
