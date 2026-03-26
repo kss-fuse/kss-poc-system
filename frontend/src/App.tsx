@@ -6,7 +6,8 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 
 function App() {
  
-  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, isLoading, error } = useAuth0();
+  console.log({ isLoading, isAuthenticated, error });
 
   if (isLoading) return <div>Loading...</div>;
 
